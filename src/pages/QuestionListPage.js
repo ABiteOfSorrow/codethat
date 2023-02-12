@@ -8,11 +8,12 @@ import Avatar from '../components/Avatar';
 import styles from './QuestionListPage.module.css';
 import searchBarStyles from '../components/SearchBar.module.css';
 import searchIcon from '../assets/search.svg';
-import { Link } from 'react-router-dom';
+import { Link, useSearchParams } from 'react-router-dom';
+
+
 
 function QuestionItem({ question }) {
   return (
-
         <Card className={styles.questionItem} key={question.title}>
             <div className={styles.info}>            
               <p className={styles.title}>
@@ -37,10 +38,18 @@ function QuestionItem({ question }) {
 }
 
 function QuestionListPage() {
-  const [keyword, setKeyword] = useState('');
-  const questions = getQuestions();
+    const [searchParams, setSearchParams] = useSearchParams();
+    const initKeyword = searchParams.get('keyword');
 
-  const handleKeywordChange = (e) => setKeyword(e.target.value);
+    const [keyword, setKeyword] = useState(initKeyword);
+    const questions = getQuestions(initKeyword || '');
+
+    const handleKeywordChange = (e) => setKeyword(e.target.value);
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        setSearchParams(keyword ? {keyword, } : '')
+    }
 
   return (
     <ListPage
@@ -62,7 +71,7 @@ function QuestionListPage() {
 
       <p className={styles.count}>총 {questions.length}개 질문</p>
 
-      {questions.length === 0 ? (
+      {initKeyword || questions.length === 0 ? (
         <Warn
           className={styles.emptyList}
           title="조건에 맞는 질문이 없어요."

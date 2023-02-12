@@ -53,3 +53,17 @@ URL에 포함되어있는 Key, Value 형식의 객체를 반환해주는 역할�
     3) courseSlug라는 변수명으로 할당된 값을 사용
           const course = getCourseBySlug(courseSlug);
  
+
+ 4. 특정 조건일때 다른 페이지로 이동하게(redirect) 해주는 Navigate
+   if (!question) {
+    return <Navigate to="/questions" />
+  }
+
+
+5. useSearchParams(); = 리액트에서 query parameter 값을 가져오기 위해 제공되는 커스텀 hook
+
+    useState의 형식으로 사용
+  const [searchParams, setSearchParams] = useSearchParams();
+
+     searchParams.get으로 parameter를 가져올 수 있음
+  const initKeyword = searchParams.get('keyword')
