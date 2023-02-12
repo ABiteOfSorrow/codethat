@@ -6,22 +6,25 @@ import CourseListPage from './pages/CourseListPage';
 import WishlistPage from './pages/WishlistPage';
 import QuestionListPage from './pages/QuestionListPage';
 import QuestionPage from './pages/QuestionPage';
+import NotFoundPage from './pages/NotFoundPage';
 
 function Main() {
   return (
     <BrowserRouter>
             <Routes>
                 <Route path="/" element={<App />}>
-                <Route index element={<HomePage />} />
+                    <Route index element={<HomePage />} />
                     <Route path="courses">
                         <Route index element={<CourseListPage />} />                
-                        <Route path="react-frontend-development" element={<CoursePage />}/>
+                        <Route path=":courseSlug" element={<CoursePage />}/>
                     </Route>
-                <Route path="wishList" element={<WishlistPage />} />
                     <Route path="questions">
                         <Route index element={<QuestionListPage/ >} />
-                        <Route path="616825" element={<QuestionPage/ >} />
+                        <Route path=":questionId" element={<QuestionPage/ >} />
                     </Route>
+                    <Route path="wishList" element={<WishlistPage />} />
+                    <Route path="*" element={<NotFoundPage />} />
+                    
                 </Route>
             </Routes>
     </BrowserRouter>
